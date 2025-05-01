@@ -1,0 +1,95 @@
+a, h4 {
+    color: #89b4fa;
+    text-decoration: none;
+  }
+
+
+code {
+    background-color: #1e1e1e; 
+    color: #d4d4d4;
+    padding: 4px 8px; 
+    border-radius: 6px;
+    font-size: 14px; 
+    display: inline-block;
+    border: 1px solid #3c3c3c; 
+    white-space: pre-wrap; 
+}
+
+
+.comment {
+    color: #6A9955; /* ts pmo green color of VSC comment pmo */
+}
+  
+a:hover, a:active {
+    color: #94e2d5;
+  }
+
+body {
+    background-color: #171717;
+    color: #cdd6f4;
+
+
+p, h1, h2, h3 ,h4 {
+    font-family: "Figtree", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 20px;
+    font-style: normal;
+    color: #ECDFCC;
+}
+
+strong {
+    color: #f0a500;
+}
+h1, h2, h3, h4, #sub {
+    text-align: center;
+}
+
+#install  {
+    margin-bottom: 30px; /* Adjust this value to set the space between paragraphs */
+}
+
+#welc {
+    color: #D84040;
+    text-decoration: solid;
+}
+
+textarea {
+    background-color: #313244;
+    color: #cdd6f4;
+    border: 0
+}
+
+
+small.caption {
+    color: #a6adc8;
+  }
+  
+  .warning {
+    color: #f9e2af;
+  }
+  
+  ::-moz-selection {
+    background: #9399b2;
+    opacity: 0.2;
+  }
+  
+  ::selection {
+    background: #9399b2;
+    opacity: 0.2;
+  }
+  
+  textarea {
+    background-color: #313244;
+    color: #cdd6f4;
+    border: 0
+  }
+
+  .uncopyable {
+    user-select: none; /* Prevent text selection for this part */
+    color: #ef2929; /* Red color for the uncopyable part */
+  }
+  
+  .copyable {
+    user-select: text; /* Ensure this part is selectable */
+    color: inherit; /* Inherit color from the parent (so it keeps the default color) */
+  }

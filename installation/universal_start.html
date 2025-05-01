@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Arch Linux Installation Docs | UNIVERSAL INSTALLATION">
+    <link rel="icon" type="image/x-icon" href="favi.png">
+    <title>docs.gentoo/start</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+</head>
+<body>  
+    <h1>Gentoo Linux Installation Guide</h1>
+    <h2>This guide is designed for universal use.</h2>
+    <h3>Contact me on <a href="https://discord.com/users/821755569248403487" target="_blank">Discord</a></h3>
+    <h4><a href="../index.html">Return</a></h4>
+    <p>This guide is for my personal Gentoo installation, and while most instructions should work universally, I cannot guarantee that they will be applicable in all cases. Please use caution and don't replicate this setup unless you're confident in your actions. I did not upload this privately for a reason—don't risk breaking your system with these commands!</p>
+
+    <div id="install">
+        <p id="ist"><strong>Begin the Installation</strong></p>
+        <p>Begin downloading the ISO: <a href="https://distfiles.gentoo.org/releases/amd64/autobuilds/20250429T205022Z/install-amd64-minimal-20250429T205022Z.iso">Minimal Installation CD</a></p>
+        <p>After downloading, flash the ISO onto a USB drive using <a href="https://rufus.ie/en/">Rufus</a>.</p>
+        <p>Once flashing is complete, reboot your system, enter UEFI, prioritize the USB drive, and boot into Gentoo.</p>
+        <p><strong>Enter the following commands:</strong></p>
+        <!-- <p><code><span class="uncopyable">root@archiso ~ </span><span class="copyable">iwctl</span></code></p> -->
+        <p><code>iwctl</code></p>
+        <p><code>station wlan0 connect <strong>WIFINAME # Change "WIFINAME" to your, obviously, wifi name.</strong></code></p>
+        <p>Press <strong>CTRL + C</strong> to exit <code>iwctl</code>.</p>
+        <p><code>pacman -Syy</code></p>
+        <p><code>pacman -S archinstall</code></p>
+        <p><code>archinstall</code></p>
+        <p>Before continuing, make sure you've followed the <a href="../installation/partitions.html">partitioning guide</a>.</p>
+        <p><strong>If <code>archinstall</code> fails, follow these manual installation steps:</strong></p>
+        <p><code>mkfs.fat -F32 /dev/nvme0n1p7</code></p>
+        <p><code>mkfs.ext4 /dev/nvme0n1p8</code></p>
+        <p><code>pacman -Syy</code></p>
+        <p><code>pacman -S reflector</code></p>
+        <p><code>reflector -c "RO" -f 12 -l 10 -n 12 --save /etc/pacman.d/mirrorlist # Please change "RO" to your country's code, by example for US it's "US"</code></p>
+        <p><code>mount /dev/nvme0n1p8 /mnt</code></p>
+        <p><code>pacstrap /mnt base linux linux-firmware vim # This is the standard kernel. Below this message is the LTS kernel variant.</code></p>
+        <p><strong>If you prefer the LTS kernel, use:</strong></p>
+        <p><code>pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware vim</code></p>
+        <p><code>genfstab -U /mnt >> /mnt/etc/fstab</code></p>
+        <p><code>arch-chroot /mnt</code></p>
+        <p><code>timedatectl set-timezone Europe/Bucharest # Change this to your Continent and capital, example: Europe/Berlin</code></p>
+        <p><code>vim /etc/locale.gen</code></p>
+        <p><strong>In <code>vim /etc/locale.gen</code>, uncomment the line with <q>en_US.UTF-8 UTF-8</q>, then exit <code>vim</code> with <q>:wq</q>.</strong></p>
+        <p><code>locale-gen</code></p>
+        <p><code>echo LANG=en_US.UTF-8 > /etc/locale.conf</code></p>
+        <p><code>export LANG=en_US.UTF-8</code></p>
+        <p><code>echo archlinux > /etc/hostname # (You can modify the hostname as desired; I chose <q>archlinux</q> for now.)</code></p>
+        <p><code>vim /etc/hosts</code></p>
+        <p>Add the following lines to <code>vim /etc/hosts</code>:</p>
+        <p><code>127.0.0.1 localhost</code></p>
+        <p><code>::1 localhost</code></p>
+        <p><code>127.0.1.1 archlinux</code></p>
+        <p><code>:wq</code></p>
+        <img src="../hosts.png" width="800px" height="700px" alt="Hosts File Screenshot">
+        <p>The hosts file should look like the screenshot. Apologies for the <strong><q>deutchHD</q></strong> entry; I didn't realize it was a hostname at the time.</p>
+        <p>Next, type <strong><q>passwd</q></strong> and set a <strong>root</strong> password.</p>
+        <p><code>pacman -S grub efibootmgr</code></p>
+        <p><code>mkdir /boot/efi</code></p>
+        <p><code>mount /dev/nvme0n1p7 /boot/efi</code></p>
+        <img src="../bootmgr.png" width="800px" height="700px" alt="Boot Manager Screenshot">
+        <p>Exit the chroot environment:</p>
+        <p><code>exit</code></p>
+        <p>Ensure you are in <strong><code>root@archiso</code></strong> when running the following command:</p>
+        <p><code>systemctl daemon-reload</code></p>
+        <p>Now, chroot into the system:</p>
+        <p><code>arch-chroot /mnt</code></p>
+        <p>Mount the EFI partition again:</p>
+        <p><code>mount /dev/nvme0n1p7 /boot/efi</code></p>
+        <p><code>grub-install --target=x86_64-efi --bootloader-id=GRUB --efi-directory=/boot/efi</code></p>
+        <p><code>grub-mkconfig -o /boot/grub/grub.cfg</code></p>
+        <p>This will generate the GRUB configuration. You can edit it to change the <strong><q>loading linux...</q></strong> and <strong><q>loading ramdisk...</q></strong> messages if desired.</p>
+        <p><code>pacman -S sudo</code></p>
+        <p><code>useradd -m empester</code><strong> (Or choose any other username)</strong></p>
+        <p><code>passwd empester</code><strong> and set a password now.</strong></p>
+        <p><code>usermod -aG wheel,audio,video,storage empester</code></p>
+        <p><code>EDITOR=vim visudo</code></p>
+        <p>Scroll down to <strong><code>%wheel ALL=(ALL:ALL) ALL</code></strong> and remove the <strong><code>#</code></strong> to enable sudo access for the user.</p>
+        <p><code>:wq # to save and quit.</code></p>
+        <p>sudo pacman -S networkmanager</p>
+        <p>Now exit and reboot, remove USB when the screen goes black.</p>
+        <p>Once rebooted, type in:</p>
+        <p><code>systemctl enable NetworkManager.service</code></p>
+        <p><code>systemctl start NetworkManager.service</code></p>
+        <p><code>sudo nmcli --ask dev wifi connect WIFI_NAME # Again, insert your wifi name.</code></p>
+        <p><strong>WELCOME TO ARCH LINUX!</strong></p>
+        <p>
+
+            Now, you use arch (btw). Honestly might try Hyprland again too cuz why not.
+            
+            As you can see, the manual installation wasn't THAT bad. It's quite more useful than some of the docs online.
+            
+            To flex, do the manual way. I wanted to use archinstall but it fucking exploded itself mid-installing so I had to do it manually.</p>
+
+    </div>
+        <!-- <p><strong>Now, for GNOME we do this:</strong></p><br>
+        <p>sudo pacman -S xorg gnome-shell</p><br>
+        sudo pacman -S  gdm<br>
+        systemctl enable gdm.service<br>
+        sudo pacman -S bluez bluez-utils<br>
+        sudo pacman -S firefox neovim btop<br>
+        systemctl enable bluetooth<br>
+        sudo pacman -S git base-devel<br>
+        git clone https://aur.archlinux.org/yay.git<br>
+        cd yay<br>
+        makepkg -si<br>
+        reboot<br>
+        <strong>Make sure to login into your arch session tho if it prompts you to.</strong><br>
+        <strong>Now, we will go into tty to install some finishing stuff. To go in TTY press <q>CTRL + ALT +F3</q> ( may differ on some PCs/Laptops, if it doesn't work try CTRL + ALT + F2</strong><br>
+        sudo pacman -S gnome-control-center<br>
+        sudo pacman -S nautilus gnome-terminal<br>
+        sudo pacman -S gnome<br>
+        sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-liberation ttf-dejavu ttf-roboto ttf-jetbrains-mono ttf-fira-code ttf-hack adobe-source-code-pro-fonts<br>
+        reboot<br> -->
+
+    </p>
+    <p><img src="../rice.png"height="700" width="1100"></p>
+    <p><img src="../hypr.png"height="700" width="1100"></p>
+
+</div>
+<script src="../redirect.js"></script>
+</body>
+</html>
