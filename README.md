@@ -22,10 +22,10 @@ The project has been made publicly so that it can be studied, improved upon it b
 - **index.html**: Here resides the main file for the site. This is the home file that all users accessing the site will see first, which can be seen at: https://gentoolinux.onrender.com/
 - **flood.css & flood.js**: The following files are from https://melonking.net/free/software/flood , they are there to create the flood the user is greeted upon accessing the main site, as a nice little effect.
 - **new-style.css**: This is the main CSS the site uses, it's easily understandable and readable due to the fact the project wasn't coded by an expert in the languages, but by someone interested in learning the languages little by little.
-- ** any .png**: Those png files are yet to be sorted into a professionally manner, but they are there for pictures regarding the installation, this project is a copy of my other one, which was an Arch linux handbook I made, which is also the reasons some of the pngs here or files may be only related to arch and not gentoo, but that is yet to be changed ASAP.
-- ** Installation directory **: This is one of the most important directories inside the project, inside can be found files for the installation process itself, both html and css reside in there.
-- ** Images directory **: Images for the blinkies on the main page.
-- ** Rice directory **: Small rices that is yet to be made after gentoo is installed.
+- **any .png**: Those png files are yet to be sorted into a professionally manner, but they are there for pictures regarding the installation, this project is a copy of my other one, which was an Arch linux handbook I made, which is also the reasons some of the pngs here or files may be only related to arch and not gentoo, but that is yet to be changed ASAP.
+- **Installation directory**: This is one of the most important directories inside the project, inside can be found files for the installation process itself, both html and css reside in there.
+- **Images directory**: Images for the blinkies on the main page.
+- **Rice directory**: Small rices that is yet to be made after gentoo is installed.
 
   ---
 
